@@ -1,9 +1,10 @@
 crypto_ticker:
-  build: .
+  # build: .
+  image: kallqvist/crypto-ticker
   ports:
   - 5000:5000
-  volumes:
-  - ./code:/code
+  # volumes:
+  # - ./code:/code
   environment:
     API_DEBUG: 'true'
     FROM_CURRENCIES: 'BTC,ETH,BCH,DASH,XRP,XMR,STRAT,LTC,DASH'
@@ -13,7 +14,7 @@ grafana:
   image: grafana/grafana
   volumes:
   - ./storage/grafana/data:/var/lib/grafana
-  - ./storage/grafana/config.ini:/etc/grafana/grafana.ini
+  - ./config/grafana/config.ini:/etc/grafana/grafana.ini
   ports:
   - 3000:3000
   links:
@@ -27,7 +28,7 @@ prometheus:
   - 9090:9090
   volumes:
   - ./storage/prometheus/data:/data
-  - ./storage/prometheus/config.yml:/etc/prometheus/prometheus.yml
+  - ./config/prometheus/config.yml:/etc/prometheus/prometheus.yml
   command:
   - -storage.local.path=/data
   - -config.file=/etc/prometheus/prometheus.yml
