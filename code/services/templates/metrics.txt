@@ -1,0 +1,12 @@
+{% for m in metrics -%}
+{% if 'help' in m -%}
+# HELP {{ m['key'] }} {{ m['help'] }}
+{% endif -%}
+# TYPE {{ m['key'] }} {{ m['type'] }}
+{% for v in m['values'] -%}
+{{ m['key'] }}
+{%- if 'labels_string' in v %}{
+{{- v['labels_string'] -}}
+}{%- endif %} {{ v['value'] }}
+{% endfor %}
+{% endfor %}
