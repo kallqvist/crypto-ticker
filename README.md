@@ -10,8 +10,8 @@ The stack is:
 Select currencies using environment variables for crypto-ticker as in docker-compose.yml example.
 
 ```
-FROM_CURRENCIES: 'BTC,ETH,BCH,DASH,XRP,XMR,STRAT,LTC,DASH'
-TO_CURRENCIES: 'SEK,EUR,USD'
+CRYPTO_FROM: 'BTC,ETH,BCH,DASH,XRP,XMR,STRAT,LTC,DASH'
+CRYPTO_TO: 'EUR,USD'
 ```
 
 docker-compose: https://github.com/kallqvist/crypto-ticker/blob/master/docker-compose.yml
