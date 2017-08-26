@@ -4,7 +4,7 @@ from services import app
 import requests
 import os
 
-class CryptoTickerMetrics(MetricsTickerBase):
+class FiatTickerMetrics(MetricsTickerBase):
     """ PingAPI """
 
     def _get_rates(self, from_currency, to_currency):
@@ -12,6 +12,8 @@ class CryptoTickerMetrics(MetricsTickerBase):
             from_currency = [from_currency]
         if type(to_currency) is not list:
             to_currency = [to_currency]
+
+        # todo: better (non crypto-targeted) source?
         api_req = requests.get(
             'https://min-api.cryptocompare.com/data/pricemultifull?fsyms={}&tsyms={}'.format(
                 ','.join(from_currency),
@@ -34,12 +36,7 @@ class CryptoTickerMetrics(MetricsTickerBase):
                         'value': vb['PRICE'],
                     })
             res.append({
-                'key': 'crypto_exchange_supply',
-                'type': 'gauge',
-                'values': supply,
-            })
-            res.append({
-                'key': 'crypto_exchange_price',
+                'key': 'fiat_exchange_price',
                 'type': 'gauge',
                 'values': prices,
             })
@@ -47,7 +44,7 @@ class CryptoTickerMetrics(MetricsTickerBase):
         return []
 
     def get(self):
-        _from, _to = self._get_params('CRYPTO_FROM', 'CRYPTO_TO')
+        _from, _to = self._get_params('FIAT_FROM', 'FIAT_TO')
 
         metrics = self._get_rates(
             from_currency=_from,
@@ -61,4 +58,4 @@ class CryptoTickerMetrics(MetricsTickerBase):
             mimetype='text/plain',
         )
 
-app.add_url_rule('/metrics/cryptoticker', view_func=CryptoTickerMetrics.as_view('cryptoticker'))
+app.add_url_rule('/metrics/fiatticker', view_func=FiatTickerMetrics.as_view('fiatticker'))

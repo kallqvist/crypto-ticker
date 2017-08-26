@@ -1,13 +1,10 @@
-from electrum import Network
-from electrum.util import json_encode, print_msg
-import json
+from electrum.wallet import Wallet
 
+class InMemoryWalletStorage(dict):
+    def put(self, key, value, _save):
+        self[key] = value
 
-n = Network()
-n.start()
-
-addr = '1ByMK9Q5HnLmoewQ5ji8wjrJgdkanBngSL'
-
-h = n.synchronous_get(('blockchain.address.get_balance', [addr]))
-print(h)
-print h.get('confirmed')
+storage = InMemoryWalletStorage()
+wallet = Wallet(storage)
+# print(wallet)
+wallet.synchronize()  # generates addresses up to the gap limit.

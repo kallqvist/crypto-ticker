@@ -1,14 +1,13 @@
 crypto_ticker:
-  # build: .
   image: kallqvist/crypto-ticker
   ports:
   - 5000:5000
-  # volumes:
-  # - ./code:/code
   environment:
     API_DEBUG: 'true'
-    FROM_CURRENCIES: 'BTC,ETH,BCH,DASH,XRP,XMR,STRAT,LTC,DASH'
-    TO_CURRENCIES: 'SEK,EUR,USD'
+    CRYPTO_FROM: 'BTC,ETH,BCH,DASH,XRP,XMR,STRAT,LTC,DASH'
+    CRYPTO_TO: 'EUR,USD'
+    FIAT_FROM: 'EUR,USD'
+    FIAT_TO: 'SEK'
 
 grafana:
   image: grafana/grafana
