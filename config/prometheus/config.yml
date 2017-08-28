@@ -7,5 +7,16 @@ global:
 scrape_configs:
 - job_name: crypto_ticker
   static_configs:
-  - targets: ['crypto_ticker:5000']
+  - targets: ['crypto-ticker:5000']
   metrics_path: /metrics/cryptoticker
+
+- job_name: crypto_rank
+  static_configs:
+  - targets: ['crypto-ticker:5000']
+  metrics_path: /metrics/cryptorank
+  scrape_interval: 1m
+
+- job_name: fiat_ticker
+  static_configs:
+  - targets: ['crypto-ticker:5000']
+  metrics_path: /metrics/fiatticker

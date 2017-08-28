@@ -1,4 +1,4 @@
-crypto_ticker:
+crypto-ticker:
   image: kallqvist/crypto-ticker
   ports:
   - 5000:5000
@@ -22,7 +22,7 @@ grafana:
 prometheus:
   image: prom/prometheus:latest
   links:
-  - crypto_ticker:crypto_ticker
+  - crypto-ticker:crypto-ticker
   ports:
   - 9090:9090
   volumes:
