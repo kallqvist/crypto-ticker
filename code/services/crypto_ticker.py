@@ -29,6 +29,8 @@ class CryptoTickerMetrics(MetricsTickerBase):
                     'value': va.values()[0]['SUPPLY'],
                 })
                 for kb, vb in va.items():
+                    if ka == kb:
+                        continue
                     prices.append({
                         'labels': { 'to': kb, 'from': ka, },
                         'value': vb['PRICE'],

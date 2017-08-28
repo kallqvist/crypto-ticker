@@ -2,6 +2,7 @@ from flask import render_template, jsonify, abort, Response
 from ticker_base import MetricsTickerBase
 from services import app
 import requests
+import urllib
 import os
 
 class FiatTickerMetrics(MetricsTickerBase):
@@ -12,6 +13,15 @@ class FiatTickerMetrics(MetricsTickerBase):
             from_currency = [from_currency]
         if type(to_currency) is not list:
             to_currency = [to_currency]
+
+        # api_query = "select * from upcoming.events where location='San Francisco' and search_text='dance'"
+        # api_req = requests.get(
+        #     'http://query.yahooapis.com/v1/public/yql?q={}&format=json'.format(
+        #         urllib.urlencode(api_query)
+        #     )
+        # )
+        #
+        # return api_req
 
         # todo: better (non crypto-targeted) source?
         api_req = requests.get(
@@ -31,6 +41,8 @@ class FiatTickerMetrics(MetricsTickerBase):
                     'value': va.values()[0]['SUPPLY'],
                 })
                 for kb, vb in va.items():
+                    if ka == kb:
+                        continue
                     prices.append({
                         'labels': { 'to': kb, 'from': ka, },
                         'value': vb['PRICE'],
